@@ -1,0 +1,48 @@
+import dotenv from "dotenv";
+import { createServer } from 'node:http'; 
+import express from "express";
+import cors from "cors";
+import cron from "node-cron";
+import { login } from './contollers/login.js';
+import { connectToRedis } from './infrastructure/redis/RedisClient.js';
+import { rateLimiter } from './middlewares/redis/rateLimiter.js';
+import authRoutes from './routes/auth/login.js';
+dotenv.config();
+
+const app = express();
+const hostname = '127.0.0.1';
+const port = 5000;
+
+connectToRedis();
+
+
+app.use(express.json()) // for parsing application/json
+app.use(express.urlencoded({ extended: true })) // for parsing application/x-www-form-urlencoded
+app.use(cors())
+
+app.get("/", (req, res) => {
+  res.send("Hello World")
+});
+
+app.use("/api", authRoutes)
+
+
+function logMessage() {
+  console.log("This is a dummy corn job")
+}
+
+// Schedule the cron job to run every minute
+ cron.schedule('* * * * *', () => {
+  logMessage();
+ });
+
+app.use((err, req, res, next) => {
+    console.error(err.stack);
+    res.status(500).json({ success: false, message: 'Internal Server Error' });
+});
+// Start the server and listen on the specified port
+app.listen(port, hostname, () => {
+  console.log(`Server running at http://${hostname}:${port}`);
+});
+
+
