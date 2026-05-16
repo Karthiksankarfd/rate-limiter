@@ -1,4 +1,5 @@
 import dotenv from "dotenv";
+dotenv.config();
 import { createServer } from 'node:http'; 
 import express from "express";
 import cors from "cors";
@@ -7,7 +8,7 @@ import { login } from './contollers/login.js';
 import { connectToRedis } from './infrastructure/redis/RedisClient.js';
 import { rateLimiter } from './middlewares/redis/rateLimiter.js';
 import authRoutes from './routes/auth/login.js';
-dotenv.config();
+
 
 const app = express();
 const hostname = '127.0.0.1';
