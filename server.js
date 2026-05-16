@@ -35,7 +35,7 @@ app.use((err, req, res, next) => {
 });
 // Start the server and listen on the specified port
 app.listen(port, "0.0.0.0", () => {
-  console.log(`Server running on port ${PORT}`);
+  console.log(`Server running on port ${port}`);
 });
 
 
