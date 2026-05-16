@@ -11,7 +11,6 @@ import authRoutes from './routes/auth/login.js';
 
 
 const app = express();
-const hostname = '127.0.0.1';
 const port = 5000;
 
 connectToRedis();
