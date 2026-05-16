@@ -16,14 +16,15 @@ const port = 5000;
 
 connectToRedis();
 
-app.use(express.json()) // for parsing application/json
-app.use(express.urlencoded({ extended: true })) // for parsing application/x-www-form-urlencoded
-app.use(cors())
+app.use(express.json()) 
+app.use(express.urlencoded({ extended: true }))
+app.use(cors({
+  origin:"*"
+}))
 
 app.get("/api", (req, res) => {
   res.status(200).json({
     msg: "Hello World From Node Server" ,
-
   })
 });
 
