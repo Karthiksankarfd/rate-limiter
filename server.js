@@ -20,21 +20,13 @@ app.use(express.json()) // for parsing application/json
 app.use(express.urlencoded({ extended: true })) // for parsing application/x-www-form-urlencoded
 app.use(cors())
 
-app.get("/", (req, res) => {
-  res.send("Hello World")
+app.get("/api", (req, res) => {
+  res.status(200).json({
+    msg: "Hello World from node server" ,
+  })
 });
 
 app.use("/api", authRoutes)
-
-
-function logMessage() {
-  console.log("This is a dummy corn job")
-}
-
-// Schedule the cron job to run every minute
- cron.schedule('* * * * *', () => {
-  logMessage();
- });
 
 app.use((err, req, res, next) => {
     console.error(err.stack);
