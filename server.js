@@ -14,7 +14,7 @@ const app = express();
 const port = 5000;
 
 connectToRedis();
-
+app.set("trust proxy", true);
 app.use(express.json()) 
 app.use(express.urlencoded({ extended: true }))
 app.use(cors({
